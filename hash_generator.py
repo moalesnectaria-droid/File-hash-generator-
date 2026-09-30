@@ -7,10 +7,18 @@ if len(sys.argv) != 2:
 
 file_path = sys.argv[1]
 
-with open(file_path, "rb") as file:
-    file_data = file.read()
+try:
+    with open(file_path, "rb") as file:
+        file_data = file.read()
 
-file_hash = hashlib.sha256(file_data).hexdigest()
+    sha256_hash = hashlib.sha256(file_data).hexdigest()
+    sha512_hash = hashlib.sha512(file_data).hexdigest()
 
-print("File:", file_path)
-print("SHA-256:", file_hash)
+    print("File:", file_path)
+    print()
+    print("SHA-256:", sha256_hash)
+    print("SHA-512:", sha512_hash)
+
+except FileNotFoundError:
+    print(f"Error: File '{file_path}' was not found.")
+    sys.exit(1)
